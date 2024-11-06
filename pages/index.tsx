@@ -1,6 +1,6 @@
 export default function Home() {
   const handleFetch = async () => {
-    const { date } = await fetch('/api/date').then(r => r.json());
+    const date = new Date().toISOString();
     console.log('date:', date);
 
     const output = await window.electronAPI.invoke('write-date', date);
