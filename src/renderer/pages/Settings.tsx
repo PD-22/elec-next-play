@@ -86,7 +86,7 @@ export default function Settings() {
             type={showOpenAiKey ? 'text' : 'password'}
             value={openAiKey}
             onChange={(e) => setOpenAiKey(e.target.value)}
-            className="border border-gray-300 rounded px-4 py-2 w-full bg-background"
+            className="border border-gray-300 rounded px-4 py-2 w-full"
             placeholder="Enter your OpenAI API key"
           />
           <button
@@ -110,7 +110,7 @@ export default function Settings() {
             type={showPerplexityKey ? 'text' : 'password'}
             value={perplexityKey}
             onChange={(e) => setPerplexityKey(e.target.value)}
-            className="border border-gray-300 rounded px-4 py-2 w-full bg-background"
+            className="border border-gray-300 rounded px-4 py-2 w-full"
             placeholder="Enter your Perplexity API key"
           />
           <button
