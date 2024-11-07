@@ -14,6 +14,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import getCaptions from './captions';
 
 class AppUpdater {
   constructor() {
@@ -25,10 +26,11 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
+ipcMain.handle('get-subtitles', async (_, url) => {
+  console.log('get-subtitles', url);
+  const result = await getCaptions(url);
+  console.log('result length', result.length);
+  return result;
 });
 
 if (process.env.NODE_ENV === 'production') {
