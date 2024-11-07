@@ -1,180 +1,159 @@
-<h3 align="center">
-	<img src="https://github.com/DarkGuy10/NextJS-Electron-Boilerplate/assets/62807269/1f7a5a9a-a8c7-4ec7-b5f5-6a4fbfe0f1b2" alt="capybara" height="300px" /><br/>
-	「NextJS + Electron Boilerplate」
-</h3>
+<img src=".erb/img/erb-banner.svg" width="100%" />
 
-<h6 align="center">
-  <a href="#-features">Features</a>
-  ·
-  <a href="#-setting-up">Setting Up</a>
-  ·
-  <a href="#-documentation">Documentation</a>
-  ·
-  <a href="#-license">License</a>
-</h6>
+<br>
 
-<p align="center">
-	<a href="https://github.com/darkguy10/NextJS-Electron-Boilerplate/stargazers">
-		<img alt="Stargazers" src="https://img.shields.io/github/stars/darkguy10/NextJS-Electron-Boilerplate?style=for-the-badge&logo=starship&color=C9CBFF&logoColor=D9E0EE&labelColor=302D41"></a>
-	<a href="https://github.com/DarkGuy10/NextJS-Electron-Boilerplate/issues">
-		<img src="https://img.shields.io/github/issues/DarkGuy10/NextJS-Electron-Boilerplate?colorA=1e1e28&colorB=bee4ed&logoColor=D9E0EE&logo=gitbook&style=for-the-badge"></a>
-  <a href="https://github.com/darkguy10/NextJS-Electron-Boilerplate/releases/latest">
-  	<img alt="Releases" src="https://img.shields.io/github/release/darkguy10/NextJS-Electron-Boilerplate?style=for-the-badge&logo=github&color=F2CDCD&logoColor=D9E0EE&labelColor=302D41"/></a>
+<p>
+  Electron React Boilerplate uses <a href="https://electron.atom.io/">Electron</a>, <a href="https://facebook.github.io/react/">React</a>, <a href="https://github.com/reactjs/react-router">React Router</a>, <a href="https://webpack.js.org/">Webpack</a> and <a href="https://www.npmjs.com/package/react-refresh">React Fast Refresh</a>.
 </p>
 
-&nbsp;
+<br>
 
-<p align="center">
-  A neat and highly flexible boilerplate for building cross-platform apps with Electron at the core and NextJS serving as the frontend. The template is pre-configured with a bunch of handy tools to ease out development process. Plus, Typescript is supported from the get-go!
-</p>
+<div align="center">
 
-&nbsp;
+[![Build Status][github-actions-status]][github-actions-url]
+[![Github Tag][github-tag-image]][github-tag-url]
+[![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/Fjy3vfgy5q)
 
-### ✨ Features
+[![OpenCollective](https://opencollective.com/electron-react-boilerplate-594/backers/badge.svg)](#backers)
+[![OpenCollective](https://opencollective.com/electron-react-boilerplate-594/sponsors/badge.svg)](#sponsors)
+[![StackOverflow][stackoverflow-img]][stackoverflow-url]
 
-- Pre-configured with [Storybook](https://storybook.js.org/), Eslint, [Prettier](https://prettier.io/) and [Electron Builder](https://www.electron.build)
-- [SVGR](https://react-svgr.com/) pre-installed and configred for easily using SVGs as React components
-- Pre-configured CI/CD workflows through github actions
-- Binaries support auto-updates by default
-- Typescript and ESModules supported by default
-- Import aliases supported for both main and renderer processes
-- Completely flexible, transparent and customizable structure
-- Intuitive structure to avoid messy codebase
-- Documented <a href="#-scripts">npm scripts</a>
+</div>
 
-&nbsp;
+## Install
 
-> [!TIP]
-> ​[Nextron](https://github.com/saltyshiomix/nextron) has been around for long, and has developed quite the userbase (2.8k stars as of writing). Therefore, its a very valid question: why not just use Nextron?
-> And the only valid answer is: _flexibiliy_.<br/>
-> With Nextron, there's a limit to how much you can tweak your code, and it might actually be a plus point if you want to focus on getting a basic app done.<br />
-> However, if you're like me, and you like having full control of your project, and not being at the mercy of a third-party project mantainer, then welcome aboard mate—this is just the thing you were searching for!
+Clone the repo and install dependencies:
 
-&nbsp;
-
-### 🚀 Setting Up
-
-This repo is a public template and you can easily use it create a new repo. A bit about that in [this article](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
-
-Once you're done, just clone _your_ repo (not this template) and install the dependencies (with `yarn install`) to get started
-
-&nbsp;
-
-### 📚 Documentation
-
-#### 📂 Structure
-
-```
-.
-├── assets
-│   ├── icon.icns
-│   ├── icon.ico
-│   └── icon.png
-├── backend
-│   ├── main.ts
-│   ├── preload.ts
-│   ├── README.md
-│   ├── tsconfig.json
-│   └── .eslintrc.json
-├── frontend
-│   ├── app
-│   │   ├── assets
-│   |   │   ├── edit.svg
-│   |   │   └── menhera.png
-│   │   ├── favicon.ico
-│   │   ├── globals.css
-│   │   ├── layout.tsx
-│   │   ├── page.module.css
-│   │   └── page.tsx
-│   ├── context.d.ts
-│   ├── .eslintrc.json
-│   └── tsconfig.json
-├── next.config.js
-├── electron-builder.yml
-├── package.json
-├── README.md
-└── yarn.lock
-
+```bash
+git clone --depth 1 --branch main https://github.com/electron-react-boilerplate/electron-react-boilerplate.git your-project-name
+cd your-project-name
+npm install
 ```
 
-- `assets/`: Contains app icons used during run and build times.
-- `backend/`: This is where your electron main processes reside.
-- `frontend/`: This is where your NextJS app lives.
-- `next.config.js`: NextJS config file.
-- `electron-builder.yml`: Electron builder config file.
+**Having issues installing? See our [debugging guide](https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/400)**
 
-There's more information about `frontend` and `backend` parts in the README files in their respective directories.
+## Starting Development
 
-&nbsp;
+Start the app in the `dev` environment:
 
-#### 💻 Scripts
-
-You can run these scripts from your terminal using
-
-```
-yarn <SCRIPT_NAME>
+```bash
+npm start
 ```
 
-<table> 
-	<tr>
-		<td> <pre>start</pre> </td>
-		<td>Starts the app in development mode</td>
-	</tr>
-	<tr>
-		<td> <pre>lint</pre> </td>
-		<td>Checks for code styling issues with prettier, also runs eslint on backend and frontend</td>
-	</tr>
-	<tr>
-		<td> <pre>lint:fix</pre> </td>
-		<td>Formats code with prettier (write mode)</td>
-	</tr>
-	<tr>
-		<td> <pre>storybook</pre> </td>
-		<td>Starts the Storybook dev server</td>
-	</tr>
-	<tr>
-		<td> <pre>build</pre> </td>
-		<td>Builds the electron app (the `lint` script is auto-executed before building)</td>
-	</tr>
-	<tr>
-		<td><pre>frontend:dev</pre></td>
-		<td>Starts the NextJS development server</td>
-	</tr>
-	<tr>
-		<td> <pre>frontend:lint</pre> </td>
-		<td>Runs eslint only on the `frontend/` directory</td>
-	</tr>
-	<tr>
-		<td> <pre>frontend:build</pre> </td>
-		<td>Builds only the frontend NextJS app to `frontend/build/` directory</td>
-	</tr>
-	<tr>
-		<td> <pre>backend:lint</pre> </td>
-		<td>Runs eslint only on the `backend/` directory</td>
-	</tr>
-	<tr>
-		<td> <pre>backend:build</pre> </td>
-		<td>Transpiles the backend code to `backend/build/` directory</td>
-	</tr>
-</table>
+## Packaging for Production
 
-&nbsp;
+To package apps for the local platform:
 
-### 📜 License
+```bash
+npm run package
+```
 
-<a href="https://github.com/darkguy10/NextJS-Electron-Boilerplate/blob/main/LICENSE"><img src="https://img.shields.io/github/license/darkguy10/NextJS-Electron-Boilerplate?style=for-the-badge&labelColor=302D41&color=C9CBFF"/></a>
+## Docs
 
-This repository is released under the MIT license, which grants the following permissions:
+See our [docs and guides here](https://electron-react-boilerplate.js.org/docs/installation)
 
-- Commercial use
-- Distribution
-- Modification
-- Private use
+## Community
 
-For more convoluted language, see the [LICENSE](https://github.com/darkguy10/NextJS-Electron-Boilerplate/blob/main/LICENSE.md).
+Join our Discord: https://discord.gg/Fjy3vfgy5q
 
-&nbsp;
+## Sponsors
 
-### 📖 References
+<a href="https://palette.dev">
+  <img src=".erb/img/palette-sponsor-banner.svg" width="100%" />
+</a>
 
-Inspirations taken from the famous [React+Electron Boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate) repo.
+## Donations
+
+**Donations will ensure the following:**
+
+- 🔨 Long term maintenance of the project
+- 🛣 Progress on the [roadmap](https://electron-react-boilerplate.js.org/docs/roadmap)
+- 🐛 Quick responses to bug reports and help requests
+
+## Backers
+
+Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/electron-react-boilerplate-594#backer)]
+
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/0/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/0/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/1/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/1/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/2/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/2/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/3/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/3/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/4/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/4/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/5/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/5/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/6/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/6/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/7/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/7/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/8/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/8/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/9/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/9/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/10/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/10/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/11/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/11/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/12/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/12/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/13/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/13/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/14/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/14/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/15/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/15/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/16/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/16/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/17/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/17/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/18/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/18/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/19/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/19/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/20/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/20/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/21/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/21/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/22/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/22/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/23/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/23/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/24/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/24/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/25/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/25/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/26/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/26/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/27/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/27/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/28/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/28/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/backer/29/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/backer/29/avatar.svg"></a>
+
+## Sponsors
+
+Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/electron-react-boilerplate-594-594#sponsor)]
+
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/0/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/1/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/2/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/3/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/4/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/5/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/6/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/7/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/8/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/9/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/9/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/10/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/10/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/11/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/11/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/12/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/12/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/13/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/13/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/14/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/14/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/15/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/15/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/16/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/16/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/17/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/17/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/18/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/18/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/19/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/19/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/20/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/20/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/21/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/21/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/22/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/22/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/23/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/23/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/24/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/24/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/25/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/25/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/26/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/26/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/27/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/27/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/28/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/28/avatar.svg"></a>
+<a href="https://opencollective.com/electron-react-boilerplate-594/sponsor/29/website" target="_blank"><img src="https://opencollective.com/electron-react-boilerplate-594/sponsor/29/avatar.svg"></a>
+
+## Maintainers
+
+- [Amila Welihinda](https://github.com/amilajack)
+- [John Tran](https://github.com/jooohhn)
+- [C. T. Lin](https://github.com/chentsulin)
+- [Jhen-Jie Hong](https://github.com/jhen0409)
+
+## License
+
+MIT © [Electron React Boilerplate](https://github.com/electron-react-boilerplate)
+
+[github-actions-status]: https://github.com/electron-react-boilerplate/electron-react-boilerplate/workflows/Test/badge.svg
+[github-actions-url]: https://github.com/electron-react-boilerplate/electron-react-boilerplate/actions
+[github-tag-image]: https://img.shields.io/github/tag/electron-react-boilerplate/electron-react-boilerplate.svg?label=version
+[github-tag-url]: https://github.com/electron-react-boilerplate/electron-react-boilerplate/releases/latest
+[stackoverflow-img]: https://img.shields.io/badge/stackoverflow-electron_react_boilerplate-blue.svg
+[stackoverflow-url]: https://stackoverflow.com/questions/tagged/electron-react-boilerplate
