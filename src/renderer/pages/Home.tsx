@@ -29,15 +29,15 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen">
-      <form className="border-b" onSubmit={submitHandler}>
+    <div>
+      <form className="flex gap-1" onSubmit={submitHandler}>
         <input
-          className="bg-background text-foreground px-2 py-1"
+          className="bg-background text-foreground border px-2 py-1"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="https://www.youtube.com/watch?v="
         />
-        <button className="border-l px-2 py-1" type="submit">
+        <button className="border px-2 py-1" type="submit">
           Extract Subtitles
         </button>
       </form>
