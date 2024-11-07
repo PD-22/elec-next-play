@@ -4,6 +4,7 @@ import Layout from './Layout';
 import Home from './pages/Home';
 import Settings from './pages/Settings';
 import YoutubeCaptionExtractor from './pages/tools/YoutubeCaptionExtractor';
+import ScienceProve from './pages/tools/ScienceProve';
 
 // TODO: may dry layout repetition
 
@@ -32,6 +33,14 @@ export default function App() {
           element={
             <Layout>
               <YoutubeCaptionExtractor />
+            </Layout>
+          }
+        />
+        <Route
+          path="/tools/science-prove"
+          element={
+            <Layout>
+              <ScienceProve />
             </Layout>
           }
         />

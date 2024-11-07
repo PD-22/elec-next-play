@@ -192,14 +192,16 @@ export default function YoutubeCaptionExtractor() {
               Copy Subtitles
             </button>
             <button
+              className="cursor-not-allowed"
               onClick={handleChapterizeSubtitles}
               style={{
                 padding: '10px 20px',
                 border: '1px solid #333',
                 borderRadius: '4px',
-                cursor: 'pointer',
+                // cursor: 'pointer',
               }}
-              disabled={chapterizing}
+              // disabled={chapterizing}
+              disabled
             >
               {chapterizing ? 'Chapterizing...' : 'Chapterize Subtitles'}
             </button>
