@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable promise/always-return */
-/* eslint-disable promise/catch-or-return */
+/* eslint-disable  */
 
 'use client';
 

@@ -10,7 +10,7 @@ export default function App() {
   // How router works may up it comp
   return (
     // TEMP
-    <Router initialEntries={['/tools/science-prove']}>
+    <Router initialEntries={['/tools/youtube-caption-extractor']}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />

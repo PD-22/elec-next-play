@@ -1,19 +1,19 @@
-// TODO: fix warnings
-
 'use client';
 
 import { useState } from 'react';
+import { z } from 'zod';
 
 interface Caption {
   startTime: string;
   line: string;
 }
 
-interface Chapter {
-  startingTime: string;
-  title: string;
-  summary: string;
-}
+const ChapterSchema = z.object({
+  startingTime: z.string(),
+  title: z.string(),
+  summary: z.string(),
+});
+type Chapter = z.infer<typeof ChapterSchema>;
 
 // TEMP
 const INIT_URL = 'GpI68hQ3acM';
@@ -32,7 +32,8 @@ export default function YoutubeCaptionExtractor() {
       const urlObj = new URL(url);
       if (urlObj.hostname.includes('youtube.com')) {
         return urlObj.searchParams.get('v') || '';
-      } else if (urlObj.hostname === 'youtu.be') {
+      }
+      if (urlObj.hostname === 'youtu.be') {
         return urlObj.pathname.slice(1);
       }
       return url;
@@ -49,13 +50,13 @@ export default function YoutubeCaptionExtractor() {
 
     try {
       const extractedVideoId = extractVideoId(videoId);
-      const captions = await window.electron.ipcRenderer.invoke(
+      const newCaptions = await window.electron.ipcRenderer.invoke(
         'get-subtitles',
         { url: extractedVideoId, language: '', format: 'vtt' },
       );
-      setCaptions(captions || []);
-    } catch (error: any) {
-      setError(`Error: ${error.message}`);
+      setCaptions(newCaptions || []);
+    } catch (e: any) {
+      setError(`Error: ${e.message}`);
     } finally {
       setLoading(false);
     }
@@ -76,33 +77,24 @@ export default function YoutubeCaptionExtractor() {
       .then(() => {
         setShowToast(true);
         setTimeout(() => setShowToast(false), 3000); // Hide after 3 seconds
+        return true;
       })
       .catch((err) => setError(`Failed to copy: ${err.message}`));
   };
 
-  const sendMessageToOpenAI = async (messages: any[]) => {
-    // TODO: handle openai api
-    return console.error('openai api is not impemented');
-    // try {
-    //   const response = await fetch('/api/openai', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ messages }),
-    //   });
-
-    //   if (!response.ok) {
-    //     const error = await response.json();
-    //     throw new Error(error.error || 'Failed to fetch response');
-    //   }
-
-    //   const data = await response.json();
-    //   return data.choices[0].message.content;
-    // } catch (error: any) {
-    //   console.error('Error:', error);
-    //   throw error;
-    // }
+  const sendMessageToOpenAI = async (
+    messages: { role: string; content: string }[],
+  ) => {
+    try {
+      const data = await window.electron.ipcRenderer.invoke(
+        'request-openai',
+        messages,
+      );
+      return data.choices[0].message.content;
+    } catch (e: any) {
+      console.error('Error:', e);
+      throw e;
+    }
   };
 
   const handleChapterizeSubtitles = async () => {
@@ -126,27 +118,26 @@ export default function YoutubeCaptionExtractor() {
       },
     ];
 
-    return;
-    // try {
-    //   setChapterizing(true);
-    //   setChapters([]);
-    //   const response = await sendMessageToOpenAI(messages);
+    try {
+      setChapterizing(true);
+      setChapters([]);
+      const response = await sendMessageToOpenAI(messages);
+      // Clean up the response to isolate the JSON array if there is extra surrounding text
+      const jsonStart = response.indexOf('[');
+      const jsonEnd = response.lastIndexOf(']');
+      const cleanResponse = response.substring(jsonStart, jsonEnd + 1);
 
-    //   Clean up the response to isolate the JSON array if there is extra surrounding text
-    //   const jsonStart = response.indexOf('[');
-    //   const jsonEnd = response.lastIndexOf(']');
-    //   const cleanResponse = response.substring(jsonStart, jsonEnd + 1);
-
-    //   // Parse the cleaned response as JSON
-    //   const chapterData: Chapter[] = JSON.parse(cleanResponse);
-    //   setChapters(chapterData);
-    // } catch (error) {
-    //   if (!(error && typeof error === 'object' && 'message' in error))
-    //     throw new TypeError('invalid error type');
-    //   setError(`Error: ${error.message}`);
-    // } finally {
-    //   setChapterizing(false);
-    // }
+      // Parse the cleaned response as JSON
+      const json = JSON.parse(cleanResponse);
+      const chapterData: Chapter[] = z.array(ChapterSchema).parse(json);
+      setChapters(chapterData);
+    } catch (e) {
+      if (!(e && typeof e === 'object' && 'message' in e))
+        throw new Error('invalid error type');
+      setError(`Error: ${e.message}`);
+    } finally {
+      setChapterizing(false);
+    }
   };
 
   return (
@@ -167,6 +158,7 @@ export default function YoutubeCaptionExtractor() {
       />
       <div style={{ display: 'flex', gap: '10px' }}>
         <button
+          type="button"
           onClick={handleExtract}
           style={{
             padding: '10px 20px',
@@ -182,6 +174,7 @@ export default function YoutubeCaptionExtractor() {
         {captions.length > 0 && (
           <>
             <button
+              type="button"
               onClick={handleCopySubtitles}
               style={{
                 padding: '10px 20px',
@@ -193,16 +186,14 @@ export default function YoutubeCaptionExtractor() {
               Copy Subtitles
             </button>
             <button
-              className="cursor-not-allowed"
+              type="button"
               onClick={handleChapterizeSubtitles}
               style={{
                 padding: '10px 20px',
                 border: '1px solid #333',
                 borderRadius: '4px',
-                // cursor: 'pointer',
+                cursor: 'pointer',
               }}
-              // disabled={chapterizing}
-              disabled
             >
               {chapterizing ? 'Chapterizing...' : 'Chapterize Subtitles'}
             </button>
@@ -218,7 +209,11 @@ export default function YoutubeCaptionExtractor() {
           <div style={{ marginBottom: '20px' }}>
             <h1>Chapterized Output:</h1>
             {chapters.map((chapter, index) => (
-              <div key={index} style={{ marginBottom: '10px' }}>
+              <div
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
+                style={{ marginBottom: '10px' }}
+              >
                 <a
                   href={`https://www.youtube.com/watch?v=${extractVideoId(videoId)}&t=${parseTimecode(chapter.startingTime)}s`}
                   target="_blank"
@@ -239,6 +234,7 @@ export default function YoutubeCaptionExtractor() {
         {/* Display Extracted Captions */}
         {captions.length > 0
           ? captions.map((caption, index) => (
+              // eslint-disable-next-line react/no-array-index-key
               <div key={index}>
                 <a
                   href={`https://www.youtube.com/watch?v=${extractVideoId(videoId)}&t=${Math.floor(parseTimecode(caption.startTime))}s`}

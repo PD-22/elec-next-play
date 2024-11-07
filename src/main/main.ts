@@ -8,15 +8,16 @@
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
-import path from 'path';
-import { app, BrowserWindow, shell, ipcMain, screen } from 'electron';
-import { autoUpdater } from 'electron-updater';
+import { app, BrowserWindow, ipcMain, screen, shell } from 'electron';
 import log from 'electron-log';
-import MenuBuilder from './menu';
-import { resolveHtmlPath } from './util';
+import { autoUpdater } from 'electron-updater';
+import path from 'path';
 import getCaptions from './captions';
+import MenuBuilder from './menu';
 import perplexity from './perplexity';
+import { resolveHtmlPath } from './util';
 import { clearApiKey, loadApiKey, saveApiKey } from './utils/settingsManager';
+import requestOpenai from './openai';
 
 class AppUpdater {
   constructor() {
@@ -28,12 +29,16 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-ipcMain.handle('get-subtitles', async (_, { url, language, format }) => {
-  console.log('get-subtitles', { url, language, format });
-  const result = await getCaptions(url, language, format);
-  console.log('get-subtitles result length', result.length);
-  return result;
-});
+type GetSubtitles = { startTime: string; line: string }[];
+ipcMain.handle(
+  'get-subtitles',
+  async (_, { url, language, format }): Promise<GetSubtitles> => {
+    console.log('get-subtitles', { url, language, format });
+    const result = await getCaptions(url, language, format);
+    console.log('get-subtitles result length', result.length);
+    return result;
+  },
+);
 
 ipcMain.handle('perplexity', async (_, { Question, Instruction }) => {
   if (typeof Question !== 'string')
@@ -60,6 +65,8 @@ ipcMain.handle('clear-api-key', (_, serviceName) => {
   clearApiKey(serviceName);
   return true;
 });
+
+ipcMain.handle('request-openai', (_, arg) => requestOpenai(arg));
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');

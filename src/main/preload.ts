@@ -6,7 +6,8 @@ export type Channels =
   | 'get-subtitles'
   | 'perplexity'
   | 'load-api-key'
-  | 'save-api-key';
+  | 'save-api-key'
+  | 'request-openai';
 
 const electronHandler = {
   ipcRenderer: {

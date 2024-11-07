@@ -28,6 +28,11 @@ export default async function getCaptions(
   language: string = '',
   format: string = 'vtt',
 ): Promise<{ startTime: string; line: string }[]> {
+  // TEMP: mock response
+  // return Array.from({ length: 4 }, (_v, i) => ({
+  //   startTime: `startTime #${i}`,
+  //   line: `line #${i}`,
+  // }));
   try {
     const videoId = extractVideoId(urlOrId);
     if (!videoId) throw new Error('Invalid YouTube URL or video ID');
