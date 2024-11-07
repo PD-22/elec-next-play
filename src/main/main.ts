@@ -26,9 +26,9 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-ipcMain.handle('get-subtitles', async (_, url) => {
-  console.log('get-subtitles', url);
-  const result = await getCaptions(url);
+ipcMain.handle('get-subtitles', async (_, { url, language, format }) => {
+  console.log('get-subtitles', { url, language, format });
+  const result = await getCaptions(url, language, format);
   console.log('result length', result.length);
   return result;
 });
