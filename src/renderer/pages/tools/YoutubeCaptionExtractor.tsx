@@ -15,6 +15,7 @@ interface Chapter {
   summary: string;
 }
 
+// TEMP
 const INIT_URL = 'GpI68hQ3acM';
 
 export default function YoutubeCaptionExtractor() {

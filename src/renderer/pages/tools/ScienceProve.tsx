@@ -1,9 +1,7 @@
-// TODO: handle all missing packages and fetch api
-
 'use client';
 
 import { useState } from 'react';
-// import { marked } from 'marked';
+import { marked } from 'marked';
 
 interface ApiResponse {
   result?: string;
@@ -11,45 +9,36 @@ interface ApiResponse {
   [key: string]: any;
 }
 
+// TEMP
+const INIT_QUESTION = 'Earth is flat';
+
 export default function ScienceProve() {
-  const [question, setQuestion] = useState<string>('');
+  const [question, setQuestion] = useState<string>(INIT_QUESTION);
   const [result, setResult] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleCheck = async () => {
-    return;
-    // setLoading(true);
-    // setResult(null);
+    setLoading(true);
+    setResult(null);
 
-    // const requestBody = {
-    //   Question: question,
-    //   Instruction:
-    //     "Check the scientific evidence and research studies with statistically significant results that support or refute the claim provided. Please give just conclusion whether the results were clinically significant and links to the most relevant studies.",
-    // };
+    const requestBody = {
+      Question: question,
+      Instruction:
+        'Check the scientific evidence and research studies with statistically significant results that support or refute the claim provided. Please give just conclusion whether the results were clinically significant and links to the most relevant studies.',
+    };
 
-    // try {
-    //   const response = await fetch(
-    //     '/api/perplexity',
-    //     {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify(requestBody),
-    //     }
-    //   );
-
-    //   if (!response.ok) {
-    //     throw new Error(`Server responded with status ${response.status}`);
-    //   }
-
-    //   const data: ApiResponse = await response.json();
-    //   setResult(data);
-    // } catch (error: any) {
-    //   setResult({ error: error.message });
-    // } finally {
-    //   setLoading(false);
-    // }
+    try {
+      const data = await window.electron.ipcRenderer.invoke(
+        'perplexity',
+        requestBody,
+      );
+      console.log('data', data);
+      setResult(data);
+    } catch (error: any) {
+      setResult({ error: error.message });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -69,7 +58,11 @@ export default function ScienceProve() {
           borderRadius: '4px', // Optional for rounded corners
         }}
       />
-      <button className='cursor-not-allowed' onClick={handleCheck} disabled style={{ padding: '10px 20px' }}>
+      <button
+        type="button"
+        onClick={handleCheck}
+        style={{ padding: '10px 20px' }}
+      >
         {loading ? 'Checking...' : 'Check'}
       </button>
       <div style={{ marginTop: '20px' }}>
@@ -78,7 +71,8 @@ export default function ScienceProve() {
         )}
         {result && result.result && (
           <div
-          // dangerouslySetInnerHTML={{ __html: marked(result.result) }}
+            /* eslint-disable-next-line react/no-danger */
+            dangerouslySetInnerHTML={{ __html: marked(result.result) }}
           />
         )}
       </div>

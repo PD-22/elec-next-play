@@ -9,7 +9,8 @@ import ScienceProve from './pages/tools/ScienceProve';
 export default function App() {
   // How router works may up it comp
   return (
-    <Router>
+    // TEMP
+    <Router initialEntries={['/tools/science-prove']}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />

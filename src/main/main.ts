@@ -15,6 +15,7 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import getCaptions from './captions';
+import perplexity from './perplexity';
 
 class AppUpdater {
   constructor() {
@@ -29,8 +30,16 @@ let mainWindow: BrowserWindow | null = null;
 ipcMain.handle('get-subtitles', async (_, { url, language, format }) => {
   console.log('get-subtitles', { url, language, format });
   const result = await getCaptions(url, language, format);
-  console.log('result length', result.length);
+  console.log('get-subtitles result length', result.length);
   return result;
+});
+
+ipcMain.handle('perplexity', async (_, { Question, Instruction }) => {
+  if (typeof Question !== 'string')
+    throw new Error(`Invalid question: "${Question}"`);
+  if (typeof Instruction !== 'string')
+    throw new Error(`Invalid instruction: "${Instruction}"`);
+  return perplexity(Question, Instruction);
 });
 
 if (process.env.NODE_ENV === 'production') {
