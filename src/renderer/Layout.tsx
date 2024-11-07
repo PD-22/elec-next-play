@@ -1,5 +1,4 @@
-import { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -12,7 +11,7 @@ import { Link } from 'react-router-dom';
 //   weight: "100 900",
 // });
 
-function Layout({ children }: { children: ReactNode }) {
+function Layout() {
   return (
     <div
     //  className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -27,7 +26,9 @@ function Layout({ children }: { children: ReactNode }) {
         </Link>
       </nav>
       {/* Add a container with a maximum width */}
-      <div className="max-w-4xl mx-auto p-4">{children}</div>
+      <div className="max-w-4xl mx-auto p-4">
+        <Outlet />
+      </div>
     </div>
   );
 }

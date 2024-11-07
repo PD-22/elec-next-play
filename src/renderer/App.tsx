@@ -6,44 +6,20 @@ import Settings from './pages/Settings';
 import YoutubeCaptionExtractor from './pages/tools/YoutubeCaptionExtractor';
 import ScienceProve from './pages/tools/ScienceProve';
 
-// TODO: may dry layout repetition
-
 export default function App() {
+  // How router works may up it comp
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Layout>
-              <Home />
-            </Layout>
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <Layout>
-              <Settings />
-            </Layout>
-          }
-        />
-        <Route
-          path="/tools/youtube-caption-extractor"
-          element={
-            <Layout>
-              <YoutubeCaptionExtractor />
-            </Layout>
-          }
-        />
-        <Route
-          path="/tools/science-prove"
-          element={
-            <Layout>
-              <ScienceProve />
-            </Layout>
-          }
-        />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route
+            path="/tools/youtube-caption-extractor"
+            element={<YoutubeCaptionExtractor />}
+          />
+          <Route path="/tools/science-prove" element={<ScienceProve />} />
+        </Route>
       </Routes>
     </Router>
   );
