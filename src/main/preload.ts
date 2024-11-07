@@ -2,11 +2,15 @@
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'get-subtitles' | 'perplexity';
+export type Channels =
+  | 'get-subtitles'
+  | 'perplexity'
+  | 'load-api-key'
+  | 'save-api-key';
 
 const electronHandler = {
   ipcRenderer: {
-    sendMessage(channel: Channels, ...args: unknown[]) {
+    send(channel: Channels, ...args: unknown[]) {
       ipcRenderer.send(channel, ...args);
     },
     on(channel: Channels, func: (...args: unknown[]) => void) {

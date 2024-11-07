@@ -16,6 +16,7 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import getCaptions from './captions';
 import perplexity from './perplexity';
+import { clearApiKey, loadApiKey, saveApiKey } from './utils/settingsManager';
 
 class AppUpdater {
   constructor() {
@@ -40,6 +41,24 @@ ipcMain.handle('perplexity', async (_, { Question, Instruction }) => {
   if (typeof Instruction !== 'string')
     throw new Error(`Invalid instruction: "${Instruction}"`);
   return perplexity(Question, Instruction);
+});
+
+// Error invoking remote method 'save-api-key': Error: Invalid serviceName: "OPENAI"
+ipcMain.handle('save-api-key', (_, serviceName, key) => {
+  if (serviceName !== 'OPENAI' && serviceName !== 'PERPLEXITY')
+    throw new Error(`Invalid serviceName: "${serviceName}"`);
+  if (typeof key !== 'string') throw new Error(`Invalid key: "${key}"`);
+  saveApiKey(serviceName, key);
+  return true;
+});
+
+ipcMain.handle('load-api-key', (_, serviceName) => loadApiKey(serviceName));
+
+ipcMain.handle('clear-api-key', (_, serviceName) => {
+  if (serviceName !== 'OPENAI' || serviceName !== 'PERPLEXITY')
+    throw new Error(`Invalid serviceName: "${serviceName}"`);
+  clearApiKey(serviceName);
+  return true;
 });
 
 if (process.env.NODE_ENV === 'production') {

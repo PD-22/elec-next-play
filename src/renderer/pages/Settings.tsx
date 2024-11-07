@@ -1,28 +1,56 @@
-// TODO: uncomment
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable promise/always-return */
+/* eslint-disable promise/catch-or-return */
 
 'use client';
 
-import { useState, useEffect } from 'react';
-// import { FaEye, FaEyeSlash } from "react-icons/fa";
-// import { saveApiKey, loadApiKey } from '../utils/settingsManager'; // Import your settings manager
+import { useEffect, useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { ApiKey } from '../../main/utils/settingsManager';
+
+const loadApiKey = async (serviceName: ApiKey) => {
+  const result = await window.electron.ipcRenderer.invoke(
+    'load-api-key',
+    serviceName,
+  );
+  if (typeof result !== 'string')
+    throw new Error(`Invalid result of "load-api-key"`, result);
+  return result;
+};
+
+const saveApiKey = async (serviceName: ApiKey, key: string) => {
+  const result = await window.electron.ipcRenderer.invoke(
+    'save-api-key',
+    serviceName,
+    key,
+  );
+  if (result !== true)
+    throw new Error(`Invalid result of "save-api-key"`, result);
+};
 
 export default function Settings() {
   const [openAiKey, setOpenAiKey] = useState<string>('');
   const [perplexityKey, setPerplexityKey] = useState<string>('');
-  const [showOpenAiKey, setShowOpenAiKey] = useState<boolean>(false);
-  const [showPerplexityKey, setShowPerplexityKey] = useState<boolean>(false);
+  const [showOpenAiKey, setShowOpenAiKey] = useState<boolean>(true); // TEMP
+  const [showPerplexityKey, setShowPerplexityKey] = useState<boolean>(true); // TEMP
   const [showNotification, setShowNotification] = useState<boolean>(false);
 
   // Load the API keys when the page loads
   useEffect(() => {
-    // setOpenAiKey(loadApiKey('OPENAI') || '');
-    // setPerplexityKey(loadApiKey('PERPLEXITY') || '');
+    loadApiKey('OPENAI').then((x) => {
+      setOpenAiKey(x || '');
+    });
+    loadApiKey('PERPLEXITY').then((x) => {
+      setPerplexityKey(x || '');
+    });
   }, []);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // Use the settingsManager to save the API keys
-    // saveApiKey('OPENAI', openAiKey);
-    // saveApiKey('PERPLEXITY', perplexityKey);
+    await Promise.all([
+      saveApiKey('OPENAI', openAiKey),
+      saveApiKey('PERPLEXITY', perplexityKey),
+    ]);
 
     // Show notification
     setShowNotification(true);
@@ -58,7 +86,7 @@ export default function Settings() {
             type={showOpenAiKey ? 'text' : 'password'}
             value={openAiKey}
             onChange={(e) => setOpenAiKey(e.target.value)}
-            className="border border-gray-300 rounded px-4 py-2 w-full"
+            className="border border-gray-300 rounded px-4 py-2 w-full bg-background"
             placeholder="Enter your OpenAI API key"
           />
           <button
@@ -66,8 +94,7 @@ export default function Settings() {
             onClick={toggleShowOpenAiKey}
             className="absolute right-2 top-2 text-gray-500"
           >
-            {/* {showOpenAiKey ? <FaEyeSlash /> : <FaEye />} */}
-            {showOpenAiKey ? '+' : '-'}
+            {showOpenAiKey ? <FaEyeSlash /> : <FaEye />}
           </button>
         </div>
       </div>
@@ -83,7 +110,7 @@ export default function Settings() {
             type={showPerplexityKey ? 'text' : 'password'}
             value={perplexityKey}
             onChange={(e) => setPerplexityKey(e.target.value)}
-            className="border border-gray-300 rounded px-4 py-2 w-full"
+            className="border border-gray-300 rounded px-4 py-2 w-full bg-background"
             placeholder="Enter your Perplexity API key"
           />
           <button
@@ -91,8 +118,7 @@ export default function Settings() {
             onClick={toggleShowPerplexityKey}
             className="absolute right-2 top-2 text-gray-500"
           >
-            {/* {showPerplexityKey ? <FaEyeSlash /> : <FaEye />} */}
-            {showPerplexityKey ? '+' : '-'}
+            {showPerplexityKey ? <FaEyeSlash /> : <FaEye />}
           </button>
         </div>
       </div>
@@ -100,8 +126,7 @@ export default function Settings() {
       <button
         type="button"
         onClick={handleSave}
-        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-not-allowed"
-        disabled
+        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
         Save Keys
       </button>
