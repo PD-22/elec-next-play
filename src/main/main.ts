@@ -66,7 +66,10 @@ ipcMain.handle('clear-api-key', (_, serviceName) => {
   return true;
 });
 
-ipcMain.handle('request-openai', (_, arg) => requestOpenai(arg));
+ipcMain.handle('request-openai', async (_, arg) => {
+  const result = await requestOpenai(arg);
+  return result;
+});
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');

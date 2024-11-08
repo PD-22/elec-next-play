@@ -90,6 +90,8 @@ export default function YoutubeCaptionExtractor() {
         'request-openai',
         messages,
       );
+      const err = data?.error;
+      if (err && typeof err === 'string') throw new Error(err);
       return data.choices[0].message.content;
     } catch (e: any) {
       console.error('Error:', e);

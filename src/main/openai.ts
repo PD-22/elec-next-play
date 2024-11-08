@@ -1,6 +1,6 @@
-// TODO: connect to openai
-
+import OpenAI from 'openai';
 import { z } from 'zod';
+import { loadApiKey } from './utils/settingsManager';
 
 const OpenaiMessagesSchema = z.array(
   z.object({
@@ -10,18 +10,60 @@ const OpenaiMessagesSchema = z.array(
 );
 // type OpenaiMessages = z.infer<typeof OpenaiMessagesSchema>;
 
-export default function requestOpenai(arg: any) {
-  const messages = OpenaiMessagesSchema.parse(arg);
-
-  // TEMP: fake chatgpt api response
+function fakeResponse(messages: any) {
+  const formattedSubtitles = messages[0].content;
+  if (typeof formattedSubtitles !== 'string')
+    throw new Error('Invalid formattedSubtitles', formattedSubtitles);
   const content = `123${JSON.stringify(
-    messages[0].content.split('\n').map((_m, i) => ({
+    formattedSubtitles.split('\n').map((_, i) => ({
       startingTime: '00:00',
       title: `title #${i}`,
       summary: `summary #${i}`,
     })),
   )}456`;
-  const fakeResponse = { choices: [{ message: { content } }] };
+  return { choices: [{ message: { content } }] };
+}
 
-  return fakeResponse;
+export default async function requestOpenai(arg: any) {
+  const messages = OpenaiMessagesSchema.parse(arg);
+  // const messages = arg;
+
+  const apiKey = loadApiKey('OPENAI');
+  if (!apiKey) return { error: 'OpenAI API key not found' };
+  console.log('openai apiKey', apiKey);
+
+  const openai = new OpenAI({ apiKey });
+  const model = 'gpt-4o-mini';
+
+  // // Generate a cache key based on model and body content
+  // const cacheKey = generateCacheKey(model, body);
+  // // Check if response is cached
+  // const cachedResponse = await cache.getCache(cacheKey);
+  // if (cachedResponse) {
+  //   console.log('Returning cached response');
+  //   return cachedResponse;
+  // }
+
+  // TEMP: use fake response instead
+  try {
+    // Make the OpenAI API request if not cached
+    const completion = await openai.chat.completions.create({
+      model,
+      messages: messages as any,
+      temperature: 0.7,
+      stream: false,
+    });
+
+    const completionString = JSON.stringify(completion);
+    console.log('[DEBUG] completionString', completionString);
+  } catch (error) {
+    console.warn('[DEBUG] completionString', error);
+  }
+
+  // // Cache the response for future requests
+  // await cache.saveCache(cacheKey, completionString);
+
+  // TEMP: fake chatgpt api response
+  // return completionString;
+  return fakeResponse(messages);
 }
