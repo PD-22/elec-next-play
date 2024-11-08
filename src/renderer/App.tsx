@@ -7,9 +7,8 @@ import YoutubeCaptionExtractor from './pages/tools/YoutubeCaptionExtractor';
 import ScienceProve from './pages/tools/ScienceProve';
 
 export default function App() {
-  // How router works may up it comp
   return (
-    // TEMP
+    // TEMP: temp debug init route
     <Router initialEntries={['/tools/youtube-caption-extractor']}>
       <Routes>
         <Route path="/" element={<Layout />}>

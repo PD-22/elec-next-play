@@ -31,8 +31,10 @@ const saveApiKey = async (serviceName: ApiKey, key: string) => {
 export default function Settings() {
   const [openAiKey, setOpenAiKey] = useState<string>('');
   const [perplexityKey, setPerplexityKey] = useState<string>('');
-  const [showOpenAiKey, setShowOpenAiKey] = useState<boolean>(true); // TEMP
-  const [showPerplexityKey, setShowPerplexityKey] = useState<boolean>(true); // TEMP
+  // TEMP: temp show openai api key
+  const [showOpenAiKey, setShowOpenAiKey] = useState<boolean>(true);
+  // TEMP: temp show perplexity api key
+  const [showPerplexityKey, setShowPerplexityKey] = useState<boolean>(true);
   const [showNotification, setShowNotification] = useState<boolean>(false);
 
   // Load the API keys when the page loads

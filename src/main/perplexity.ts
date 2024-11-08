@@ -21,7 +21,7 @@ export default async function perplexity(
     }
     console.log('Retrieved API key.');
 
-    // TEMP: remove the fake api
+    // TEMP: fake perplexity api response
     // Initialize the PerplexityApiClient with the retrieved API key
     // import PerplexityApiClient from './utils/perplexityApiClient';
     // const perplexityApiClient = new PerplexityApiClient(apiKey);

@@ -1,4 +1,4 @@
-// TODO: uncomment
+// TODO: add fileStringCache
 
 // import * as fs from 'fs';
 // import * as path from 'path';

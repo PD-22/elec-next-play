@@ -9,7 +9,7 @@ interface ApiResponse {
   [key: string]: any;
 }
 
-// TEMP
+// TEMP: temp debug init question
 const INIT_QUESTION = 'Earth is flat';
 
 export default function ScienceProve() {

@@ -15,7 +15,7 @@ const ChapterSchema = z.object({
 });
 type Chapter = z.infer<typeof ChapterSchema>;
 
-// TEMP
+// TEMP: temp debug init url
 const INIT_URL = 'GpI68hQ3acM';
 
 export default function YoutubeCaptionExtractor() {

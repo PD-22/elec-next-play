@@ -1,3 +1,5 @@
+// TODO: connect to openai
+
 import { z } from 'zod';
 
 const OpenaiMessagesSchema = z.array(
@@ -11,7 +13,7 @@ const OpenaiMessagesSchema = z.array(
 export default function requestOpenai(arg: any) {
   const messages = OpenaiMessagesSchema.parse(arg);
 
-  // TEMP
+  // TEMP: fake chatgpt api response
   const content = `123${JSON.stringify(
     messages[0].content.split('\n').map((_m, i) => ({
       startingTime: '00:00',
@@ -20,8 +22,6 @@ export default function requestOpenai(arg: any) {
     })),
   )}456`;
   const fakeResponse = { choices: [{ message: { content } }] };
-
-  // TODO: add connect to openai
 
   return fakeResponse;
 }
